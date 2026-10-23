@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AHU Motor PPM Checklist</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--text:#1b2430;--muted:#5d6b7c;--line:#d6dce4;--accent:#0b6bcb;--ok:#14803c;--bad:#c62828;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10151c;--card:#182029;--text:#e6ebf1;--muted:#97a4b3;--line:#2b3744;--accent:#5aa7f5;--ok:#4cc27a;--bad:#ff7b7b;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#10151c;--card:#182029;--text:#e6ebf1;--muted:#97a4b3;--line:#2b3744;--accent:#5aa7f5;--ok:#4cc27a;--bad:#ff7b7b;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:860px;margin:0 auto;padding:16px}
+h1{font-size:1.35rem;margin:0}
+.sub{color:var(--muted);margin:2px 0 14px}
+section{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:14px}
+h2{font-size:1rem;margin:0 0 10px;color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+label.f{display:flex;flex-direction:column;font-size:.8rem;color:var(--muted);gap:3px}
+input[type=text],input[type=date],input[type=number],textarea,select{font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:7px;width:100%;box-sizing:border-box}
+textarea{min-height:80px;resize:vertical}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:520px}
+th,td{border-bottom:1px solid var(--line);padding:7px 6px;text-align:left;vertical-align:middle}
+th{font-size:.78rem;color:var(--muted);font-weight:600}
+td.n{width:34px;color:var(--muted)}
+.opt{display:flex;gap:10px}
+.opt label{display:flex;align-items:center;gap:3px;font-size:.85rem;cursor:pointer}
+.sum{display:flex;gap:16px;flex-wrap:wrap;font-weight:600}
+.ok{color:var(--ok)}.bad{color:var(--bad)}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+button{font:inherit;border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:6px;padding:8px 14px;cursor:pointer}
+button.alt{background:transparent;color:var(--accent)}
+.sig{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.sig div{border-top:1px solid var(--text);padding-top:4px;font-size:.8rem;color:var(--muted);margin-top:34px}
+@media print{body{background:#fff;color:#000}section{break-inside:avoid;border-color:#999}.btns{display:none}:root{--card:#fff;--text:#000;--muted:#444;--line:#999;--bg:#fff}}
+</style>
+</head>
+<body>
+<main>
+<h1>AHU Motor – Planned Preventive Maintenance (PPM)</h1>
+<p class="sub">Air Handling Unit motor, fan and drive inspection checklist</p>
+
+<div class="btns">
+<button onclick="window.print()">Print / Save PDF</button>
+<button class="alt" onclick="resetAll()">Reset form</button>
+</div>
+
+<section>
+<h2>1. Equipment details</h2>
+<div class="grid">
+<label class="f">Site / Building<input type="text"></label>
+<label class="f">AHU tag / No.<input type="text"></label>
+<label class="f">Location / Floor<input type="text"></label>
+<label class="f">Motor tag / No.<input type="text"></label>
+<label class="f">Motor make &amp; model<input type="text"></label>
+<label class="f">Rated power (kW)<input type="number" step="any"></label>
+<label class="f">Rated voltage (V)<input type="number" step="any"></label>
+<label class="f">Full load current, FLA (A)<input type="number" step="any" id="fla"></label>
+<label class="f">Speed (RPM)<input type="number"></label>
+<label class="f">Frequency of PPM
+<select><option>Monthly</option><option>Quarterly</option><option>Half-yearly</option><option>Yearly</option></select></label>
+<label class="f">Date<input type="date"></label>
+<label class="f">Technician<input type="text"></label>
+</div>
+</section>
+
+<section>
+<h2>2. Safety &amp; isolation</h2>
+<div class="wrap"><table class="chk"><tbody>
+<tr><td class="n">1</td><td>Notify building owner / occupants of shutdown</td><td></td></tr>
+<tr><td class="n">2</td><td>Isolate power, apply lock-out / tag-out (LOTO)</td><td></td></tr>
+<tr><td class="n">3</td><td>Verify zero energy with tester before touching terminals</td><td></td></tr>
+<tr><td class="n">4</td><td>PPE worn (gloves, safety shoes, eye and ear protection)</td><td></td></tr>
+</tbody></table></div>
+</section>
+
+<section>
+<h2>3. Mechanical inspection</h2>
+<div class="wrap"><table class="chk"><tbody>
+<tr><td class="n">5</td><td>Motor body clean, vents and cooling fins free of dust</td><td></td></tr>
+<tr><td class="n">6</td><td>Motor mounting bolts and base frame tight, no cracks</td><td></td></tr>
+<tr><td class="n">7</td><td>Anti-vibration mounts / isolators in good condition</td><td></td></tr>
+<tr><td class="n">8</td><td>Bearings: no abnormal noise, heat or grease leakage</td><td></td></tr>
+<tr><td class="n">9</td><td>Grease bearings (correct type and quantity per nameplate)</td><td></td></tr>
+<tr><td class="n">10</td><td>Shaft free to rotate by hand, no rubbing or play</td><td></td></tr>
+<tr><td class="n">11</td><td>Fan wheel / blades clean, balanced, no damage</td><td></td></tr>
+<tr><td class="n">12</td><td>Fan shaft bearings and plummer blocks lubricated</td><td></td></tr>
+</tbody></table></div>
+</section>
+
+<section>
+<h2>4. Drive system (belt &amp; pulley)</h2>
+<div class="wrap"><table class="chk"><tbody>
+<tr><td class="n">13</td><td>V-belts: no cracks, glazing or fraying; replace as a matched set</td><td></td></tr>
+<tr><td class="n">14</td><td>Belt tension correct (about 10–15 mm deflection, per manufacturer)</td><td></td></tr>
+<tr><td class="n">15</td><td>Pulley alignment checked, grooves not worn</td><td></td></tr>
+<tr><td class="n">16</td><td>Pulley set screws / taper lock bushes tight</td><td></td></tr>
+<tr><td class="n">17</td><td>Belt guard secure and undamaged</td><td></td></tr>
+</tbody></table></div>
+</section>
+
+<section>
+<h2>5. Electrical inspection</h2>
+<div class="wrap"><table class="chk"><tbody>
+<tr><td class="n">18</td><td>Terminal box clean and dry, no moisture or burn marks</td><td></td></tr>
+<tr><td class="n">19</td><td>Terminal connections tight, no discolouration</td><td></td></tr>
+<tr><td class="n">20</td><td>Cable glands, cable insulation and earthing in good condition</td><td></td></tr>
+<tr><td class="n">21</td><td>Starter / VSD / contactor and overload relay setting checked</td><td></td></tr>
+<tr><td class="n">22</td><td>Starter panel clean, indicators and push buttons working</td><td></td></tr>
+<tr><td class="n">23</td><td>Motor rotation direction correct</td><td></td></tr>
+</tbody></table></div>
+</section>
+
+<section>
+<h2>6. Measurements (running condition)</h2>
+<div class="wrap"><table>
+<thead><tr><th>Parameter</th><th>L1 / R</th><th>L2 / Y</th><th>L3 / B</th><th>Remarks</th></tr></thead>
+<tbody>
+<tr><td>Voltage L-L (V)</td><td><input type="number" step="any"></td><td><input type="number" step="any"></td><td><input type="number" step="any"></td><td><input type="text"></td></tr>
+<tr><td>Running current (A)</td><td><input type="number" step="any" class="amp"></td><td><input type="number" step="any" class="amp"></td><td><input type="number" step="any" class="amp"></td><td id="ampnote" class="sub" style="margin:0">Compare with FLA</td></tr>
+<tr><td>Insulation resistance to earth (MΩ)</td><td><input type="number" step="any"></td><td><input type="number" step="any"></td><td><input type="number" step="any"></td><td><input type="text" placeholder="Min. 1 MΩ"></td></tr>
+<tr><td>Winding resistance (Ω)</td><td><input type="number" step="any"></td><td><input type="number" step="any"></td><td><input type="number" step="any"></td><td><input type="text"></td></tr>
+</tbody></table></div>
+<div class="grid" style="margin-top:12px">
+<label class="f">Motor DE bearing temp (°C)<input type="number" step="any"></label>
+<label class="f">Motor NDE bearing temp (°C)<input type="number" step="any"></label>
+<label class="f">Motor body temp (°C)<input type="number" step="any"></label>
+<label class="f">Vibration (mm/s)<input type="number" step="any"></label>
+</div>
+</section>
+
+<section>
+<h2>7. Result summary</h2>
+<div class="sum"><span class="ok">Pass: <span id="cp">0</span></span><span class="bad">Fail: <span id="cf">0</span></span><span>N/A: <span id="cn">0</span></span><span>Done: <span id="cd">0</span>/23</span></div>
+</section>
+
+<section>
+<h2>8. Remarks / Follow-up action</h2>
+<textarea placeholder="Defects found, parts replaced, recommendations..."></textarea>
+<div class="grid" style="margin-top:10px">
+<label class="f">Overall status
+<select><option>Satisfactory</option><option>Satisfactory with remarks</option><option>Requires corrective action</option></select></label>
+<label class="f">Next PPM due<input type="date"></label>
+</div>
+</section>
+
+<section>
+<h2>9. Sign-off</h2>
+<div class="sig"><div>Technician (name / sign / date)</div><div>Supervisor (name / sign / date)</div><div>Client representative (name / sign / date)</div></div>
+</section>
+</main>
+
+<script>
+(function(){
+  document.querySelectorAll('table.chk tbody tr').forEach(function(tr,i){
+    var name='c'+tr.children[0].textContent;
+    tr.lastElementChild.innerHTML='<div class="opt">'+
+      ['Pass','Fail','N/A'].map(function(v){return '<label><input type="radio" name="'+name+'" value="'+v+'">'+v+'</label>';}).join('')+'</div>';
+  });
+  function update(){
+    var p=0,f=0,n=0;
+    document.querySelectorAll('input[type=radio]:checked').forEach(function(r){
+      if(r.value==='Pass')p++;else if(r.value==='Fail')f++;else n++;
+    });
+    document.getElementById('cp').textContent=p;
+    document.getElementById('cf').textContent=f;
+    document.getElementById('cn').textContent=n;
+    document.getElementById('cd').textContent=p+f+n;
+    var fla=parseFloat(document.getElementById('fla').value);
+    var amps=[].map.call(document.querySelectorAll('.amp'),function(e){return parseFloat(e.value);}).filter(function(x){return !isNaN(x);});
+    var note=document.getElementById('ampnote');
+    if(fla>0&&amps.length){
+      var mx=Math.max.apply(null,amps),mn=Math.min.apply(null,amps),avg=amps.reduce(function(a,b){return a+b;},0)/amps.length;
+      var unb=avg?((mx-mn)/avg*100):0;
+      var msg='Max '+mx+' A ('+Math.round(mx/fla*100)+'% of FLA); unbalance '+unb.toFixed(1)+'%';
+      note.textContent=msg;
+      note.style.color=(mx>fla||unb>10)?'var(--bad)':'var(--ok)';
+    }else{note.textContent='Compare with FLA';note.style.color='';}
+  }
+  document.addEventListener('input',update);
+  document.addEventListener('change',update);
+  window.resetAll=function(){
+    if(!confirm('Clear all entries?'))return;
+    document.querySelectorAll('input,textarea').forEach(function(e){
+      if(e.type==='radio')e.checked=false;else e.value='';
+    });
+    document.querySelectorAll('select').forEach(function(s){s.selectedIndex=0;});
+    update();
+  };
+})();
+</script>
+</body>
+</html>
